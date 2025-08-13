@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emotional Expense Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="container">
+    <h1>Emotional Expense Tracker</h1>
+    <p class="tagline">Log your spend + mood. Spot emotional patterns.</p>
+  </header>
+
+  <main class="container grid">
+    <!-- Form -->
+    <section class="card">
+      <h2>Add Expense</h2>
+      <form id="expense-form">
+        <div class="row">
+          <label>Amount (₹)
+            <input type="number" step="0.01" min="0" id="amount" placeholder="e.g., 499" required />
+          </label>
+          <label>Date
+            <input type="date" id="date" required />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Category
+            <input type="text" id="category" placeholder="e.g., Food, Travel, Shopping" />
+          </label>
+          <label>Payment
+            <select id="payment">
+              <option value="">Select</option>
+              <option>UPI</option>
+              <option>Card</option>
+              <option>Cash</option>
+              <option>Wallet</option>
+            </select>
+          </label>
+        </div>
+
+        <label>Description
+          <input type="text" id="description" placeholder="e.g., Coffee with friend" />
+        </label>
+
+        <label>Mood at purchase
+          <select id="mood" required>
+            <option value="">Select mood</option>
+            <option>Happy</option>
+            <option>Calm</option>
+            <option>Neutral</option>
+            <option>Anxious</option>
+            <option>Stressed</option>
+            <option>Sad</option>
+            <option>Impulsive</option>
+          </select>
+        </label>
+
+        <button type="submit" class="primary">Add</button>
+        <button type="button" id="reset-storage" class="ghost">Clear All</button>
+      </form>
+    </section>
+
+    <!-- Stats -->
+    <section class="card">
+      <h2>Quick Stats</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total Spend</div>
+          <div class="stat-value" id="stat-total">₹0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Entries</div>
+          <div class="stat-value" id="stat-count">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Top Mood (Spend)</div>
+          <div class="stat-value" id="stat-top-mood">–</div>
+        </div>
+      </div>
+      <div class="insight" id="insight-box">Add a few expenses to see insights.</div>
+      <div class="actions">
+        <button id="export-csv">Export CSV</button>
+        <button id="import-json">Import JSON</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" />
+      </div>
+    </section>
+
+    <!-- Filters + Table -->
+    <section class="card span-2">
+      <h2>History</h2>
+      <div class="filters">
+        <input type="text" id="search" placeholder="Search description/category…" />
+        <select id="filter-mood">
+          <option value="">All moods</option>
+          <option>Happy</option>
+          <option>Calm</option>
+          <option>Neutral</option>
+          <option>Anxious</option>
+          <option>Stressed</option>
+          <option>Sad</option>
+          <option>Impulsive</option>
+        </select>
+        <input type="month" id="filter-month" />
+        <button id="clear-filters" class="ghost">Clear Filters</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="expense-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Amount (₹)</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Payment</th>
+              <th>Mood</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody><!-- rows injected --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="card">
+      <h2>Spend by Mood</h2>
+      <canvas id="moodChart" height="220"></canvas>
+    </section>
+
+    <section class="card">
+      <h2>Spend Over Time</h2>
+      <canvas id="timeChart" height="220"></canvas>
+    </section>
+
+    <section class="card">
+      <h2>Category Breakdown</h2>
+      <canvas id="categoryChart" height="220"></canvas>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <small>Made by Gayu · Day 1 – Emotional Expense Tracker</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
